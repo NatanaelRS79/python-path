@@ -12,23 +12,33 @@ const ModuleCard = ({ module, index }: ModuleCardProps) => {
   const isLocked = !module.unlocked;
   const isCompleted = module.completed;
   
-  const categoryColors = {
+  const categoryColors: Record<string, string> = {
     'python-basics': 'from-primary/20 to-primary/5 border-primary/30',
     'python-intermediate': 'from-accent/20 to-accent/5 border-accent/30',
     'pandas-basics': 'from-warning/20 to-warning/5 border-warning/30',
     'pandas-intermediate': 'from-xp/20 to-xp/5 border-xp/30',
+    'technical-english': 'from-success/20 to-success/5 border-success/30',
   };
   
-  const progressColor = {
+  const progressColor: Record<string, string> = {
     'python-basics': 'bg-primary',
     'python-intermediate': 'bg-accent',
     'pandas-basics': 'bg-warning',
     'pandas-intermediate': 'bg-xp',
+    'technical-english': 'bg-success',
   };
+  
+  // Get first incomplete lesson for direct navigation
+  const firstIncompleteLesson = module.lessons.find(l => !l.completed);
+  const targetUrl = isLocked 
+    ? '#' 
+    : firstIncompleteLesson 
+      ? `/lesson/${firstIncompleteLesson.id}` 
+      : `/lesson/${module.lessons[0]?.id}`;
   
   return (
     <Link 
-      to={isLocked ? '#' : `/module/${module.id}`}
+      to={targetUrl}
       className={cn(
         "group relative block",
         isLocked && "cursor-not-allowed"
