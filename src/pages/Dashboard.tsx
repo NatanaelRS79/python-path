@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import ModuleCard from '@/components/dashboard/ModuleCard';
 import ProgressOverview from '@/components/dashboard/ProgressOverview';
+import EbbinghausReview from '@/components/learning/EbbinghausReview';
 import { curriculum } from '@/data/curriculum';
 import { useProgressStore } from '@/stores/useProgressStore';
 import { Button } from '@/components/ui/button';
@@ -10,20 +11,29 @@ import {
   BookOpen, 
   Target,
   AlertTriangle,
-  Flame
+  Flame,
+  Brain,
+  Globe
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const Dashboard = () => {
-  const { progress } = useProgressStore();
+  const { progress, getOverdueReviews, getTodayReviews } = useProgressStore();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showReviews, setShowReviews] = useState(false);
+  const navigate = useNavigate();
+  
+  const overdueReviews = getOverdueReviews();
+  const todayReviews = getTodayReviews();
+  const totalPendingReviews = overdueReviews.length + todayReviews.length;
   
   const categories = [
     { id: 'python-basics', label: 'Python Básico', icon: '🐍' },
     { id: 'python-intermediate', label: 'Python Intermediário', icon: '⚡' },
     { id: 'pandas-basics', label: 'Pandas Básico', icon: '🐼' },
     { id: 'pandas-intermediate', label: 'Pandas Intermediário', icon: '📊' },
+    { id: 'technical-english', label: 'Inglês Técnico', icon: '🌐' },
   ];
   
   const filteredModules = selectedCategory 
