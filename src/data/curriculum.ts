@@ -1,4 +1,27 @@
-import { Module, Exercise, SocraticExplanation } from '@/types/learning';
+import { Module, Exercise, SocraticExplanation, TheoryContent, MASTERY_CONFIG } from '@/types/learning';
+
+// Helper to create lesson with default mastery values
+const createLesson = (
+  id: string, 
+  title: string, 
+  description: string, 
+  type: 'theory' | 'concept' | 'exercise' | 'challenge' | 'review',
+  difficulty: 'beginner' | 'intermediate' | 'advanced',
+  xpReward: number
+) => ({
+  id,
+  title,
+  description,
+  type,
+  difficulty,
+  xpReward,
+  completed: false,
+  masteryLevel: 0,
+  exercisesCompleted: 0,
+  exercisesRequired: type === 'theory' ? 3 : MASTERY_CONFIG.minExercisesPerConcept,
+  correctAnswers: 0,
+  totalAttempts: 0,
+});
 
 export const curriculum: Module[] = [
   {
@@ -10,47 +33,14 @@ export const curriculum: Module[] = [
     unlocked: true,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 25,
     lessons: [
-      {
-        id: 'py-fund-1',
-        title: 'O que é programação?',
-        description: 'Antes de escrever código, entenda por que ele existe.',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 50,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-fund-2',
-        title: 'Variáveis: Dando nomes às coisas',
-        description: 'Por que precisamos guardar informações?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 75,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-fund-3',
-        title: 'Tipos de dados',
-        description: 'Por que o computador diferencia números de textos?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-fund-4',
-        title: 'Desafio: Primeiros passos',
-        description: 'Aplique o que aprendeu em exercícios práticos.',
-        type: 'exercise',
-        difficulty: 'beginner',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('py-fund-theory', 'Introdução à Programação', 'Por que o computador precisa de instruções?', 'theory', 'beginner', 25),
+      createLesson('py-fund-1', 'O que é programação?', 'Antes de escrever código, entenda por que ele existe.', 'concept', 'beginner', 50),
+      createLesson('py-fund-2', 'Variáveis: Dando nomes às coisas', 'Por que precisamos guardar informações?', 'concept', 'beginner', 75),
+      createLesson('py-fund-3', 'Tipos de dados', 'Por que o computador diferencia números de textos?', 'concept', 'beginner', 100),
+      createLesson('py-fund-4', 'Desafio: Primeiros passos', 'Aplique o que aprendeu em exercícios práticos.', 'exercise', 'beginner', 150),
     ],
   },
   {
@@ -62,37 +52,14 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 30,
     lessons: [
-      {
-        id: 'py-logic-1',
-        title: 'Condicionais: if, elif, else',
-        description: 'Por que precisamos que programas tomem decisões?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-logic-2',
-        title: 'Operadores lógicos',
-        description: 'AND, OR, NOT - combinando condições.',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-logic-3',
-        title: 'Comparações e verdades',
-        description: 'Como o Python avalia verdadeiro e falso?',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('py-logic-theory', 'Pensamento Condicional', 'Como estruturar decisões de forma lógica?', 'theory', 'beginner', 25),
+      createLesson('py-logic-1', 'Condicionais: if, elif, else', 'Por que precisamos que programas tomem decisões?', 'concept', 'beginner', 100),
+      createLesson('py-logic-2', 'Operadores lógicos', 'AND, OR, NOT - combinando condições.', 'concept', 'beginner', 100),
+      createLesson('py-logic-3', 'Comparações e verdades', 'Como o Python avalia verdadeiro e falso?', 'concept', 'intermediate', 125),
+      createLesson('py-logic-4', 'Desafio: Tomada de Decisão', 'Resolva problemas usando condicionais.', 'exercise', 'intermediate', 175),
     ],
   },
   {
@@ -104,37 +71,15 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 35,
     lessons: [
-      {
-        id: 'py-loops-1',
-        title: 'For loops: iterando sobre sequências',
-        description: 'Por que repetir manualmente quando o código pode fazer?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-loops-2',
-        title: 'While loops: repetindo enquanto...',
-        description: 'Quando não sabemos quantas vezes repetir.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-loops-3',
-        title: 'List comprehensions',
-        description: 'A forma Pythonica de criar listas.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('py-loops-theory', 'O Poder da Repetição', 'Por que automatizar tarefas repetitivas?', 'theory', 'beginner', 25),
+      createLesson('py-loops-1', 'For loops: iterando sobre sequências', 'Por que repetir manualmente quando o código pode fazer?', 'concept', 'beginner', 100),
+      createLesson('py-loops-2', 'While loops: repetindo enquanto...', 'Quando não sabemos quantas vezes repetir.', 'concept', 'intermediate', 125),
+      createLesson('py-loops-3', 'List comprehensions', 'A forma Pythonica de criar listas.', 'concept', 'intermediate', 150),
+      createLesson('py-loops-4', 'Break, Continue e Else', 'Controlando o fluxo dentro de loops.', 'concept', 'intermediate', 125),
+      createLesson('py-loops-5', 'Desafio: Automação', 'Automatize tarefas complexas com loops.', 'exercise', 'intermediate', 200),
     ],
   },
   {
@@ -146,37 +91,15 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 40,
     lessons: [
-      {
-        id: 'py-struct-1',
-        title: 'Listas: coleções ordenadas',
-        description: 'Por que precisamos agrupar dados?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-struct-2',
-        title: 'Dicionários: chave-valor',
-        description: 'Quando a posição não importa, mas o nome sim.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-struct-3',
-        title: 'Sets e Tuplas',
-        description: 'Imutabilidade e unicidade.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('py-struct-theory', 'Organizando Informações', 'Por que precisamos de diferentes estruturas?', 'theory', 'beginner', 25),
+      createLesson('py-struct-1', 'Listas: coleções ordenadas', 'Por que precisamos agrupar dados?', 'concept', 'beginner', 100),
+      createLesson('py-struct-2', 'Métodos de Lista', 'append, insert, remove, sort e mais.', 'concept', 'beginner', 100),
+      createLesson('py-struct-3', 'Dicionários: chave-valor', 'Quando a posição não importa, mas o nome sim.', 'concept', 'intermediate', 125),
+      createLesson('py-struct-4', 'Sets e Tuplas', 'Imutabilidade e unicidade.', 'concept', 'intermediate', 125),
+      createLesson('py-struct-5', 'Desafio: Manipulação de Dados', 'Combine estruturas para resolver problemas reais.', 'exercise', 'intermediate', 200),
     ],
   },
   {
@@ -188,47 +111,15 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 35,
     lessons: [
-      {
-        id: 'py-func-1',
-        title: 'Definindo funções',
-        description: 'Por que não repetir código?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-func-2',
-        title: 'Parâmetros e retorno',
-        description: 'Entrada, processamento, saída.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-func-3',
-        title: 'Escopo de variáveis',
-        description: 'Onde uma variável vive?',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'py-func-4',
-        title: 'Lambda e funções anônimas',
-        description: 'Funções curtas para situações específicas.',
-        type: 'concept',
-        difficulty: 'advanced',
-        xpReward: 175,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('py-func-theory', 'Modularização', 'Por que dividir código em pedaços reutilizáveis?', 'theory', 'beginner', 25),
+      createLesson('py-func-1', 'Definindo funções', 'Por que não repetir código?', 'concept', 'beginner', 100),
+      createLesson('py-func-2', 'Parâmetros e retorno', 'Entrada, processamento, saída.', 'concept', 'intermediate', 125),
+      createLesson('py-func-3', 'Escopo de variáveis', 'Onde uma variável vive?', 'concept', 'intermediate', 150),
+      createLesson('py-func-4', 'Lambda e funções anônimas', 'Funções curtas para situações específicas.', 'concept', 'advanced', 175),
+      createLesson('py-func-5', 'Desafio: Refatoração', 'Transforme código repetitivo em funções.', 'exercise', 'advanced', 225),
     ],
   },
   {
@@ -240,37 +131,14 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 30,
     lessons: [
-      {
-        id: 'pd-intro-1',
-        title: 'Por que Pandas existe?',
-        description: 'O problema que Pandas resolve.',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-intro-2',
-        title: 'Series: a coluna fundamental',
-        description: 'Entendendo o bloco básico do Pandas.',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 100,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-intro-3',
-        title: 'DataFrame: a tabela poderosa',
-        description: 'Como o Pandas organiza dados tabulares.',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('pd-intro-theory', 'O Mundo dos Dados', 'Por que análise de dados é essencial?', 'theory', 'beginner', 25),
+      createLesson('pd-intro-1', 'Por que Pandas existe?', 'O problema que Pandas resolve.', 'concept', 'beginner', 100),
+      createLesson('pd-intro-2', 'Series: a coluna fundamental', 'Entendendo o bloco básico do Pandas.', 'concept', 'beginner', 100),
+      createLesson('pd-intro-3', 'DataFrame: a tabela poderosa', 'Como o Pandas organiza dados tabulares.', 'concept', 'beginner', 125),
+      createLesson('pd-intro-4', 'Desafio: Primeiros DataFrames', 'Crie e manipule seus primeiros DataFrames.', 'exercise', 'beginner', 175),
     ],
   },
   {
@@ -282,37 +150,15 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 40,
     lessons: [
-      {
-        id: 'pd-manip-1',
-        title: 'Selecionando dados: loc e iloc',
-        description: 'Por nome ou por posição?',
-        type: 'concept',
-        difficulty: 'beginner',
-        xpReward: 125,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-manip-2',
-        title: 'Filtros booleanos',
-        description: 'Encontrando exatamente o que você precisa.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-manip-3',
-        title: 'Criando e modificando colunas',
-        description: 'Transformando dados existentes.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('pd-manip-theory', 'A Arte da Seleção', 'Por que precisamos filtrar e selecionar dados?', 'theory', 'beginner', 25),
+      createLesson('pd-manip-1', 'Selecionando dados: loc e iloc', 'Por nome ou por posição?', 'concept', 'beginner', 125),
+      createLesson('pd-manip-2', 'Filtros booleanos', 'Encontrando exatamente o que você precisa.', 'concept', 'intermediate', 150),
+      createLesson('pd-manip-3', 'Criando e modificando colunas', 'Transformando dados existentes.', 'concept', 'intermediate', 150),
+      createLesson('pd-manip-4', 'Ordenação e Ranking', 'Organizando dados por critérios.', 'concept', 'intermediate', 125),
+      createLesson('pd-manip-5', 'Desafio: Transformação de Dados', 'Aplique todas as técnicas de manipulação.', 'exercise', 'intermediate', 200),
     ],
   },
   {
@@ -324,37 +170,15 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 45,
     lessons: [
-      {
-        id: 'pd-analysis-1',
-        title: 'GroupBy: dividir para conquistar',
-        description: 'Agregando dados por categorias.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 175,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-analysis-2',
-        title: 'Estatísticas descritivas',
-        description: 'Resumindo dados numericamente.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-analysis-3',
-        title: 'Pivot tables',
-        description: 'Reestruturando dados para análise.',
-        type: 'concept',
-        difficulty: 'advanced',
-        xpReward: 200,
-        completed: false,
-        masteryLevel: 0,
-      },
+      createLesson('pd-analysis-theory', 'Extraindo Insights', 'Como transformar dados em informação?', 'theory', 'intermediate', 25),
+      createLesson('pd-analysis-1', 'GroupBy: dividir para conquistar', 'Agregando dados por categorias.', 'concept', 'intermediate', 175),
+      createLesson('pd-analysis-2', 'Estatísticas descritivas', 'Resumindo dados numericamente.', 'concept', 'intermediate', 150),
+      createLesson('pd-analysis-3', 'Pivot tables', 'Reestruturando dados para análise.', 'concept', 'advanced', 200),
+      createLesson('pd-analysis-4', 'Funções de Agregação', 'sum, mean, count, agg e transform.', 'concept', 'advanced', 175),
+      createLesson('pd-analysis-5', 'Desafio: Relatório Analítico', 'Crie um relatório completo de análise.', 'exercise', 'advanced', 250),
     ],
   },
   {
@@ -366,46 +190,147 @@ export const curriculum: Module[] = [
     unlocked: false,
     completed: false,
     masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 50,
     lessons: [
+      createLesson('pd-adv-theory', 'Dados do Mundo Real', 'Lidando com complexidade e imperfeições.', 'theory', 'intermediate', 25),
+      createLesson('pd-adv-1', 'Merge e Join', 'Combinando múltiplos DataFrames.', 'concept', 'intermediate', 175),
+      createLesson('pd-adv-2', 'Tipos de Join', 'inner, outer, left, right - quando usar cada um.', 'concept', 'intermediate', 175),
+      createLesson('pd-adv-3', 'Lidando com dados faltantes', 'NaN não é o fim do mundo.', 'concept', 'intermediate', 150),
+      createLesson('pd-adv-4', 'Apply e vetorização', 'Performance em grandes datasets.', 'concept', 'advanced', 200),
+      createLesson('pd-adv-5', 'Casos reais de MBA', 'Análises típicas de processos seletivos.', 'challenge', 'advanced', 300),
+    ],
+  },
+  {
+    id: 'tech-english-reading',
+    title: 'Inglês Técnico: Leitura',
+    description: 'Interpretação de documentação e manuais técnicos.',
+    icon: '📚',
+    category: 'technical-english',
+    unlocked: false,
+    completed: false,
+    masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 40,
+    lessons: [
+      createLesson('eng-read-theory', 'Estratégias de Leitura Técnica', 'Como ler documentação de forma eficiente?', 'theory', 'beginner', 25),
+      createLesson('eng-read-1', 'Vocabulário Essencial Python', 'Termos que aparecem em toda documentação.', 'concept', 'beginner', 100),
+      createLesson('eng-read-2', 'Estrutura de Documentação', 'API docs, tutorials, references.', 'concept', 'beginner', 100),
+      createLesson('eng-read-3', 'Interpretando Stack Overflow', 'Extraindo soluções de discussões técnicas.', 'concept', 'intermediate', 125),
+      createLesson('eng-read-4', 'Error Messages em Inglês', 'Decodificando mensagens de erro.', 'concept', 'intermediate', 125),
+      createLesson('eng-read-5', 'Desafio: Documentação Real', 'Interprete documentação oficial.', 'exercise', 'intermediate', 175),
+    ],
+  },
+  {
+    id: 'tech-english-patterns',
+    title: 'Inglês Técnico: Patterns',
+    description: 'Padrões linguísticos em contexto de TI.',
+    icon: '🔤',
+    category: 'technical-english',
+    unlocked: false,
+    completed: false,
+    masteryPercentage: 0,
+    requiredMastery: 80,
+    minExercisesToMaster: 35,
+    lessons: [
+      createLesson('eng-pattern-theory', 'Padrões Recorrentes', 'Estruturas que se repetem em textos técnicos.', 'theory', 'intermediate', 25),
+      createLesson('eng-pattern-1', 'Verbos de Ação Técnica', 'implement, deploy, execute, iterate...', 'concept', 'intermediate', 125),
+      createLesson('eng-pattern-2', 'Condicionais e Requisitos', 'if, unless, provided that, as long as...', 'concept', 'intermediate', 125),
+      createLesson('eng-pattern-3', 'Comparações Técnicas', 'faster than, more efficient, unlike...', 'concept', 'intermediate', 125),
+      createLesson('eng-pattern-4', 'Instruções e Procedimentos', 'first, then, finally, make sure to...', 'concept', 'intermediate', 125),
+      createLesson('eng-pattern-5', 'Desafio: Questões de Prova', 'Simule questões reais de inglês técnico.', 'exercise', 'advanced', 200),
+    ],
+  },
+];
+
+// Sample theory content for Python Fundamentals
+export const sampleTheoryContent: TheoryContent[] = [
+  {
+    id: 'theory-py-fund',
+    lessonId: 'py-fund-theory',
+    title: 'Introdução à Programação',
+    
+    realWorldContext: 'Programação é a habilidade de dar instruções precisas para um computador executar tarefas. Em um processo seletivo de MBA, você precisa analisar dados rapidamente - programação permite automatizar isso, transformando horas de trabalho manual em segundos.',
+    
+    militaryContext: 'Assim como um plano de operação militar requer instruções claras e sequenciais para cada equipe, um programa requer comandos precisos. O computador é como um soldado extremamente disciplinado: ele faz EXATAMENTE o que você ordena, nem mais nem menos. Um erro na ordem pode comprometer toda a missão.',
+    
+    why: {
+      question: 'Por que precisamos de programação se existem planilhas?',
+      explanation: 'Planilhas são limitadas: não escalam para milhões de linhas, são propensas a erros humanos e não automatizam tarefas complexas. Programação permite criar soluções que funcionam de forma consistente, independente do volume de dados.',
+      analogy: 'É como a diferença entre fazer contas na mão e usar uma calculadora. Sim, você consegue fazer na mão, mas é lento, cansativo e sujeito a erros. Programação é sua "calculadora" para problemas complexos.',
+    },
+    
+    whatFor: {
+      question: 'Para que serve aprender Python especificamente?',
+      explanation: 'Python é a linguagem mais usada para análise de dados, sendo requisito em processos seletivos de MBA de ponta. Sua sintaxe clara permite focar no problema, não na linguagem.',
+      useCases: [
+        'Automatizar análise de relatórios financeiros',
+        'Processar milhares de currículos para RH',
+        'Gerar visualizações de dados para apresentações',
+        'Criar modelos preditivos para tomada de decisão',
+      ],
+    },
+    
+    how: {
+      question: 'Como o computador entende o que escrevemos?',
+      explanation: 'O Python traduz suas instruções em linguagem de máquina. Você escreve em inglês simplificado, o interpretador converte para o computador executar.',
+      steps: [
+        'Você escreve código em Python (texto legível)',
+        'O interpretador Python lê seu código linha por linha',
+        'Cada linha é convertida em instruções de máquina',
+        'O computador executa essas instruções',
+        'Resultados são retornados para você ver',
+      ],
+      codeExample: '# Seu primeiro programa Python\nprint("Olá, futuro aprovado no MBA!")\n\n# O Python vai:\n# 1. Ler esta instrução\n# 2. Executar a função print\n# 3. Mostrar o texto na tela',
+    },
+    
+    keyTakeaways: [
+      'Programação é dar instruções precisas ao computador',
+      'Python é a linguagem padrão para análise de dados',
+      'O código é lido de cima para baixo, linha por linha',
+      'Erros de sintaxe impedem o programa de rodar',
+    ],
+    
+    commonPitfalls: [
+      'Achar que precisa decorar tudo (você vai consultar documentação sempre)',
+      'Ter medo de errar (erros são parte do aprendizado)',
+      'Pular a lógica e ir direto para o código',
+      'Não testar o código frequentemente',
+    ],
+    
+    comprehensionQuiz: [
       {
-        id: 'pd-adv-1',
-        title: 'Merge e Join',
-        description: 'Combinando múltiplos DataFrames.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 175,
-        completed: false,
-        masteryLevel: 0,
+        question: 'Por que Python é preferido para análise de dados?',
+        options: [
+          'Porque é a linguagem mais rápida',
+          'Porque tem sintaxe clara e vasto ecossistema de bibliotecas',
+          'Porque foi criada especificamente para MBA',
+          'Porque não precisa de instalação',
+        ],
+        correctIndex: 1,
+        explanation: 'Python combina sintaxe clara (fácil de aprender) com bibliotecas poderosas como Pandas, tornando-o ideal para análise de dados.',
       },
       {
-        id: 'pd-adv-2',
-        title: 'Lidando com dados faltantes',
-        description: 'NaN não é o fim do mundo.',
-        type: 'concept',
-        difficulty: 'intermediate',
-        xpReward: 150,
-        completed: false,
-        masteryLevel: 0,
+        question: 'O que acontece quando você executa código Python?',
+        options: [
+          'O código é compilado e vira um executável permanente',
+          'O interpretador lê e executa linha por linha',
+          'O navegador traduz para HTML',
+          'O sistema operacional reescreve o código',
+        ],
+        correctIndex: 1,
+        explanation: 'Python é uma linguagem interpretada: o interpretador lê cada linha, converte para instruções de máquina e executa imediatamente.',
       },
       {
-        id: 'pd-adv-3',
-        title: 'Apply e vetorização',
-        description: 'Performance em grandes datasets.',
-        type: 'concept',
-        difficulty: 'advanced',
-        xpReward: 200,
-        completed: false,
-        masteryLevel: 0,
-      },
-      {
-        id: 'pd-adv-4',
-        title: 'Casos reais de MBA',
-        description: 'Análises típicas de processos seletivos.',
-        type: 'challenge',
-        difficulty: 'advanced',
-        xpReward: 300,
-        completed: false,
-        masteryLevel: 0,
+        question: 'Qual é a maior vantagem de programar vs usar planilhas para análise?',
+        options: [
+          'Programas são sempre mais rápidos',
+          'Planilhas não existem em empresas grandes',
+          'Automação, escala e redução de erros humanos',
+          'Programas não precisam de computador',
+        ],
+        correctIndex: 2,
+        explanation: 'Programação permite automatizar tarefas repetitivas, processar volumes massivos de dados e eliminar erros de cópia/cola comuns em planilhas.',
       },
     ],
   },
@@ -460,6 +385,8 @@ export const sampleExercises: Exercise[] = [
     difficulty: 'beginner',
     tags: ['variáveis', 'atribuição', 'cálculo'],
     xpReward: 50,
+    professionalContext: 'Em sistemas de RH, variáveis armazenam dados de funcionários para cálculos automáticos de benefícios.',
+    militaryApplication: 'Sistemas de logística usam variáveis para calcular suprimentos necessários: número_soldados * rações_por_dia = total_rações.',
   },
   {
     id: 'ex-logic-1',
@@ -496,6 +423,46 @@ export const sampleExercises: Exercise[] = [
     difficulty: 'beginner',
     tags: ['condicionais', 'if', 'elif', 'else'],
     xpReward: 75,
+    professionalContext: 'Sistemas de aprovação de crédito usam condicionais para definir limites baseados em score.',
+    militaryApplication: 'Sistemas de alerta usam condicionais: se ameaça > crítica, evacuar; se ameaça > moderada, alertar; senão, monitorar.',
+  },
+  {
+    id: 'ex-loop-1',
+    lessonId: 'py-loops-1',
+    type: 'output-prediction',
+    question: 'O que este código imprime?\n\n```python\nresultado = 0\nfor numero in [1, 2, 3, 4, 5]:\n    resultado = resultado + numero\nprint(resultado)\n```',
+    socraticHints: [
+      {
+        level: 1,
+        type: 'why',
+        question: 'Por que usamos um loop ao invés de somar manualmente?',
+        hint: 'E se a lista tivesse 1000 números?',
+      },
+      {
+        level: 2,
+        type: 'how',
+        question: 'O que acontece com `resultado` a cada iteração?',
+        hint: 'resultado começa em 0. Depois: 0+1=1, 1+2=3, 3+3=6...',
+      },
+    ],
+    options: ['15', '5', '0', '[1, 2, 3, 4, 5]'],
+    correctAnswer: 0,
+    explanation: {
+      why: 'Loops existem para automatizar repetições. Humanos erram em tarefas repetitivas; computadores não.',
+      whatFor: 'Permitem processar qualquer quantidade de dados com o mesmo código.',
+      how: 'O for percorre cada elemento da lista, executando o bloco interno. A variável resultado acumula a soma.',
+      commonMistakes: [
+        'Esquecer de inicializar a variável acumuladora',
+        'Confundir range() com lista literal',
+        'Modificar a lista enquanto itera sobre ela',
+      ],
+      realWorldExample: 'Calcular o total de vendas do mês somando cada venda individual.',
+    },
+    difficulty: 'beginner',
+    tags: ['loops', 'for', 'acumulador'],
+    xpReward: 75,
+    professionalContext: 'Relatórios financeiros usam loops para somar transações de milhares de clientes.',
+    militaryApplication: 'Contabilizar recursos: loop por cada unidade para somar efetivo total disponível.',
   },
   {
     id: 'ex-pandas-1',
@@ -545,6 +512,8 @@ export const sampleExercises: Exercise[] = [
     difficulty: 'intermediate',
     tags: ['pandas', 'filtros', 'booleanos', 'dataframe'],
     xpReward: 100,
+    professionalContext: 'Filtros são essenciais em análise financeira para segmentar clientes por múltiplos critérios.',
+    militaryApplication: 'Seleção de pessoal: filtrar efetivo por patente E especialização E disponibilidade para missão.',
   },
 ];
 
@@ -560,4 +529,27 @@ export const calculateMasteryDecay = (lastPracticed: Date): number => {
   const daysSince = (Date.now() - lastPracticed.getTime()) / (1000 * 60 * 60 * 24);
   // Ebbinghaus curve: retention decreases exponentially
   return Math.max(0, 100 * Math.exp(-daysSince / 7));
+};
+
+// Calculate next review date based on Ebbinghaus intervals
+export const getNextReviewDate = (currentInterval: number, performance: number): { nextDate: Date; nextInterval: number } => {
+  const intervals = [1, 3, 7, 14, 30, 60, 120];
+  const currentIndex = intervals.indexOf(currentInterval);
+  
+  let nextInterval: number;
+  if (performance >= 0.8) {
+    // Good performance: move to next interval
+    nextInterval = intervals[Math.min(currentIndex + 1, intervals.length - 1)];
+  } else if (performance >= 0.6) {
+    // Medium performance: stay at current interval
+    nextInterval = currentInterval;
+  } else {
+    // Poor performance: go back to shorter interval
+    nextInterval = intervals[Math.max(currentIndex - 1, 0)];
+  }
+  
+  const nextDate = new Date();
+  nextDate.setDate(nextDate.getDate() + nextInterval);
+  
+  return { nextDate, nextInterval };
 };
