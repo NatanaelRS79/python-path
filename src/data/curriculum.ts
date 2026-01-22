@@ -1,4 +1,6 @@
 import { Module, Exercise, SocraticExplanation, TheoryContent, MASTERY_CONFIG } from '@/types/learning';
+import { theoryContent } from './content/theoryContent';
+import { exercisesBank } from './content/exercisesBank';
 
 // Helper to create lesson with default mastery values
 const createLesson = (
@@ -243,98 +245,9 @@ export const curriculum: Module[] = [
   },
 ];
 
-// Sample theory content for Python Fundamentals
-export const sampleTheoryContent: TheoryContent[] = [
-  {
-    id: 'theory-py-fund',
-    lessonId: 'py-fund-theory',
-    title: 'Introdução à Programação',
-    
-    realWorldContext: 'Programação é a habilidade de dar instruções precisas para um computador executar tarefas. Em um processo seletivo de MBA, você precisa analisar dados rapidamente - programação permite automatizar isso, transformando horas de trabalho manual em segundos.',
-    
-    militaryContext: 'Assim como um plano de operação militar requer instruções claras e sequenciais para cada equipe, um programa requer comandos precisos. O computador é como um soldado extremamente disciplinado: ele faz EXATAMENTE o que você ordena, nem mais nem menos. Um erro na ordem pode comprometer toda a missão.',
-    
-    why: {
-      question: 'Por que precisamos de programação se existem planilhas?',
-      explanation: 'Planilhas são limitadas: não escalam para milhões de linhas, são propensas a erros humanos e não automatizam tarefas complexas. Programação permite criar soluções que funcionam de forma consistente, independente do volume de dados.',
-      analogy: 'É como a diferença entre fazer contas na mão e usar uma calculadora. Sim, você consegue fazer na mão, mas é lento, cansativo e sujeito a erros. Programação é sua "calculadora" para problemas complexos.',
-    },
-    
-    whatFor: {
-      question: 'Para que serve aprender Python especificamente?',
-      explanation: 'Python é a linguagem mais usada para análise de dados, sendo requisito em processos seletivos de MBA de ponta. Sua sintaxe clara permite focar no problema, não na linguagem.',
-      useCases: [
-        'Automatizar análise de relatórios financeiros',
-        'Processar milhares de currículos para RH',
-        'Gerar visualizações de dados para apresentações',
-        'Criar modelos preditivos para tomada de decisão',
-      ],
-    },
-    
-    how: {
-      question: 'Como o computador entende o que escrevemos?',
-      explanation: 'O Python traduz suas instruções em linguagem de máquina. Você escreve em inglês simplificado, o interpretador converte para o computador executar.',
-      steps: [
-        'Você escreve código em Python (texto legível)',
-        'O interpretador Python lê seu código linha por linha',
-        'Cada linha é convertida em instruções de máquina',
-        'O computador executa essas instruções',
-        'Resultados são retornados para você ver',
-      ],
-      codeExample: '# Seu primeiro programa Python\nprint("Olá, futuro aprovado no MBA!")\n\n# O Python vai:\n# 1. Ler esta instrução\n# 2. Executar a função print\n# 3. Mostrar o texto na tela',
-    },
-    
-    keyTakeaways: [
-      'Programação é dar instruções precisas ao computador',
-      'Python é a linguagem padrão para análise de dados',
-      'O código é lido de cima para baixo, linha por linha',
-      'Erros de sintaxe impedem o programa de rodar',
-    ],
-    
-    commonPitfalls: [
-      'Achar que precisa decorar tudo (você vai consultar documentação sempre)',
-      'Ter medo de errar (erros são parte do aprendizado)',
-      'Pular a lógica e ir direto para o código',
-      'Não testar o código frequentemente',
-    ],
-    
-    comprehensionQuiz: [
-      {
-        question: 'Por que Python é preferido para análise de dados?',
-        options: [
-          'Porque é a linguagem mais rápida',
-          'Porque tem sintaxe clara e vasto ecossistema de bibliotecas',
-          'Porque foi criada especificamente para MBA',
-          'Porque não precisa de instalação',
-        ],
-        correctIndex: 1,
-        explanation: 'Python combina sintaxe clara (fácil de aprender) com bibliotecas poderosas como Pandas, tornando-o ideal para análise de dados.',
-      },
-      {
-        question: 'O que acontece quando você executa código Python?',
-        options: [
-          'O código é compilado e vira um executável permanente',
-          'O interpretador lê e executa linha por linha',
-          'O navegador traduz para HTML',
-          'O sistema operacional reescreve o código',
-        ],
-        correctIndex: 1,
-        explanation: 'Python é uma linguagem interpretada: o interpretador lê cada linha, converte para instruções de máquina e executa imediatamente.',
-      },
-      {
-        question: 'Qual é a maior vantagem de programar vs usar planilhas para análise?',
-        options: [
-          'Programas são sempre mais rápidos',
-          'Planilhas não existem em empresas grandes',
-          'Automação, escala e redução de erros humanos',
-          'Programas não precisam de computador',
-        ],
-        correctIndex: 2,
-        explanation: 'Programação permite automatizar tarefas repetitivas, processar volumes massivos de dados e eliminar erros de cópia/cola comuns em planilhas.',
-      },
-    ],
-  },
-];
+// Export theory and exercises from separate files
+export const sampleTheoryContent = theoryContent;
+export const sampleExercises = exercisesBank;
 
 export const sampleExercises: Exercise[] = [
   {
