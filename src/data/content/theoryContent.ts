@@ -1029,4 +1029,566 @@ export const theoryContent: TheoryContent[] = [
       },
     ],
   },
+
+  // ============================================
+  // SUB-LIÇÕES: FUNDAMENTOS DO PYTHON
+  // Teoria detalhada para cada lição individual
+  // ============================================
+  
+  {
+    id: 'theory-py-fund-2',
+    lessonId: 'py-fund-2',
+    title: 'Variáveis e Atribuição',
+    
+    realWorldContext: 'Variáveis são a memória do seu programa. Quando você faz uma análise, precisa guardar valores intermediários: total de vendas, média de notas, nome do cliente. Sem variáveis, cada cálculo seria perdido imediatamente.',
+    
+    militaryContext: 'Variáveis são como indicativos de chamada (call signs). "Alfa-1" não é o soldado - é um nome que APONTA para o soldado. Se "Alfa-1" for reatribuído a outro soldado, o indicativo agora aponta para outra pessoa. Em código: alfa_1 = "Soldado Silva" pode virar alfa_1 = "Soldado Santos".',
+    
+    why: {
+      question: 'Por que precisamos "dar nomes" aos valores?',
+      explanation: 'O computador trabalha com endereços de memória (números incompreensíveis). Variáveis são apelidos humanos para esses endereços. Você escreve "salario" e o Python sabe qual número você quer.',
+      analogy: 'É como salvar um contato no celular. Você não decora o número 11-99999-9999, você salva como "Mãe" e usa esse nome.',
+    },
+    
+    whatFor: {
+      question: 'Para que servem variáveis em análise de dados?',
+      explanation: 'Variáveis armazenam dados para reutilização: totais acumulados, filtros, configurações. Elas tornam o código legível e modificável.',
+      useCases: [
+        'Guardar o total acumulado de vendas em um loop',
+        'Armazenar o caminho do arquivo para reutilizar',
+        'Definir parâmetros como taxa_juros = 0.05',
+        'Salvar resultados intermediários de cálculos',
+      ],
+    },
+    
+    how: {
+      question: 'Como criar e usar variáveis em Python?',
+      explanation: 'Use o operador de atribuição (=). O nome vem à esquerda, o valor à direita. Python infere o tipo automaticamente.',
+      steps: [
+        'Escolha um nome descritivo (snake_case)',
+        'Use = para atribuir valor: nome = valor',
+        'O valor pode ser número, texto, resultado de cálculo',
+        'Reatribua para mudar o valor: nome = novo_valor',
+        'Use a variável pelo nome em qualquer lugar',
+      ],
+      codeExample: '# Variáveis com contexto militar\nefetivo_companhia = 150\nbaixas = 3\nefetivo_atual = efetivo_companhia - baixas\n\nprint(f"Efetivo atual: {efetivo_atual} soldados")\n\n# Reatribuição após reforço\nreforco = 20\nefetivo_atual = efetivo_atual + reforco\n\nprint(f"Após reforço: {efetivo_atual} soldados")',
+    },
+    
+    keyTakeaways: [
+      'Nomes descritivos: efetivo_atual, não x',
+      '= é atribuição, == é comparação',
+      'Variáveis podem ser reatribuídas a qualquer momento',
+      'Python não exige declarar tipo previamente',
+    ],
+    
+    commonPitfalls: [
+      'Usar espaços no nome (use underscore: meu_valor)',
+      'Começar com número (2nome não funciona)',
+      'Usar palavras reservadas (if, for, class)',
+      'Esquecer que = reatribui (sobrescreve o valor anterior)',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'O que acontece quando você faz x = 5 e depois x = 10?',
+        options: [
+          'Erro: variável já existe',
+          'x guarda ambos os valores',
+          'x passa a valer 10 (sobrescreve)',
+          'x permanece 5',
+        ],
+        correctIndex: 2,
+        explanation: 'Reatribuição sobrescreve o valor anterior. x agora aponta para 10, o valor 5 é descartado.',
+      },
+      {
+        question: 'Qual nome de variável é válido em Python?',
+        options: [
+          '2_vendas',
+          'vendas-totais',
+          'vendas_totais',
+          'vendas totais',
+        ],
+        correctIndex: 2,
+        explanation: 'snake_case com underscores é válido. Não pode começar com número, usar hífen ou espaços.',
+      },
+    ],
+  },
+
+  {
+    id: 'theory-py-fund-3',
+    lessonId: 'py-fund-3',
+    title: 'Tipos de Dados Primitivos',
+    
+    realWorldContext: 'Dados vêm em diferentes formas: números inteiros (quantidade), decimais (valores monetários), textos (nomes), verdadeiro/falso (status). Cada tipo tem operações específicas permitidas.',
+    
+    militaryContext: 'É como a diferença entre informação quantitativa e qualitativa em um briefing. "150 soldados" (número), "Capitão Silva" (texto), "Posição segura: afirmativo" (booleano). Você não soma nomes nem divide status.',
+    
+    why: {
+      question: 'Por que diferenciar tipos de dados?',
+      explanation: 'Tipos determinam operações válidas. Você pode somar números, mas não pode somar texto com número diretamente. Tipos previnem erros lógicos.',
+      analogy: 'É como unidades de medida. Não faz sentido somar 5 quilos com 3 metros. Tipos garantem que operações façam sentido.',
+    },
+    
+    whatFor: {
+      question: 'Para que serve conhecer os tipos em análise de dados?',
+      explanation: 'Pandas trata tipos automaticamente, mas erros de tipo são comuns. Saber identificar e converter tipos evita bugs sutis em análises.',
+      useCases: [
+        'int: contar itens, índices, quantidades',
+        'float: valores monetários, percentuais, médias',
+        'str: nomes, descrições, categorias',
+        'bool: flags, filtros, condições',
+      ],
+    },
+    
+    how: {
+      question: 'Quais são os tipos básicos em Python?',
+      explanation: 'int (inteiro), float (decimal), str (texto), bool (verdadeiro/falso). Use type() para verificar.',
+      steps: [
+        'int: números inteiros (5, -3, 1000)',
+        'float: números decimais (3.14, -0.5, 2.0)',
+        'str: texto entre aspas ("hello", \'world\')',
+        'bool: True ou False (exatamente assim)',
+        'type(variavel) mostra o tipo atual',
+      ],
+      codeExample: '# Tipos em contexto de análise militar\nefetivo = 150          # int: contagem exata\nprontidao = 0.87       # float: 87% de prontidão\nunidade = "3º BIL"     # str: identificação\noperacional = True     # bool: status binário\n\nprint(type(efetivo))    # <class \'int\'>\nprint(type(prontidao))  # <class \'float\'>\nprint(type(unidade))    # <class \'str\'>\nprint(type(operacional))# <class \'bool\'>',
+    },
+    
+    keyTakeaways: [
+      'int e float são numéricos (operações matemáticas)',
+      'str é texto (concatenação, formatação)',
+      'bool é binário (condições, filtros)',
+      'Conversão: int(), float(), str(), bool()',
+    ],
+    
+    commonPitfalls: [
+      'Confundir "5" (str) com 5 (int)',
+      'Esquecer que 5/2 = 2.5 (float) em Python 3',
+      'bool("False") é True (string não vazia)',
+      'Tentar operações inválidas (ex: "5" + 5)',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'Qual o resultado de type(3.0)?',
+        options: [
+          'int',
+          'float',
+          'str',
+          'number',
+        ],
+        correctIndex: 1,
+        explanation: 'Qualquer número com ponto decimal é float, mesmo que seja .0',
+      },
+      {
+        question: 'O que acontece com int("42")?',
+        options: [
+          'Erro',
+          'Retorna a string "42"',
+          'Retorna o inteiro 42',
+          'Retorna 0',
+        ],
+        correctIndex: 2,
+        explanation: 'int() converte string numérica para inteiro. int("42") = 42.',
+      },
+    ],
+  },
+
+  {
+    id: 'theory-py-fund-4',
+    lessonId: 'py-fund-4',
+    title: 'Operadores Aritméticos e Lógicos',
+    
+    realWorldContext: 'Operadores são os verbos da programação: somar, subtrair, comparar, verificar condições. Toda análise de dados usa operadores para transformar e filtrar informações.',
+    
+    militaryContext: 'Operadores são como as ações em uma ordem de operações. "Se inimigo > 100 E suprimentos < 50% ENTÃO recuar". Os operadores (>, <, E) definem a lógica da decisão.',
+    
+    why: {
+      question: 'Por que precisamos de diferentes operadores?',
+      explanation: 'Cálculos usam aritméticos (+, -, *, /). Decisões usam comparação (>, <, ==). Condições complexas usam lógicos (and, or, not). Cada tipo serve um propósito.',
+      analogy: 'É como gramática: verbos para ações, adjetivos para comparações, conjunções para ligar ideias.',
+    },
+    
+    whatFor: {
+      question: 'Para que servem operadores em Pandas?',
+      explanation: 'Filtros usam comparação (df["col"] > 5), cálculos usam aritméticos (df["a"] + df["b"]), e condições múltiplas usam lógicos (& e |).',
+      useCases: [
+        'Calcular nova coluna: df["total"] = df["qtd"] * df["preco"]',
+        'Filtrar: df[df["vendas"] > 1000]',
+        'Condição composta: df[(df["a"] > 5) & (df["b"] < 10)]',
+        'Verificar: df["status"] == "ativo"',
+      ],
+    },
+    
+    how: {
+      question: 'Quais são os operadores principais?',
+      explanation: 'Aritméticos: +, -, *, /, //, %, **. Comparação: ==, !=, >, <, >=, <=. Lógicos: and, or, not (Python) / &, |, ~ (Pandas).',
+      steps: [
+        'Aritméticos: +, -, *, / (básicos), // (divisão inteira), % (resto), ** (potência)',
+        'Comparação: == (igual), != (diferente), >, <, >=, <=',
+        'Lógicos Python: and (E), or (OU), not (NÃO)',
+        'Lógicos Pandas: & (E), | (OU), ~ (NÃO) - COM PARÊNTESES!',
+        'Resultado de comparação é bool (True/False)',
+      ],
+      codeExample: '# Operadores em contexto tático\nefetivo = 150\nbaixas = 12\nreforco = 30\n\n# Aritméticos\nefetivo_atual = efetivo - baixas + reforco\nperda_percentual = (baixas / efetivo) * 100\n\n# Comparação\naptas_operacao = efetivo_atual >= 100\n\n# Lógicos\nsuprimentos_ok = True\npode_avancar = aptas_operacao and suprimentos_ok\n\nprint(f"Efetivo: {efetivo_atual}, Apto: {aptas_operacao}")\nprint(f"Pode avançar: {pode_avancar}")',
+    },
+    
+    keyTakeaways: [
+      '/ sempre retorna float, // retorna inteiro truncado',
+      '% retorna o resto da divisão (útil para par/ímpar)',
+      '** é potência: 2**3 = 8',
+      'Em Pandas, use & e | com parênteses obrigatórios',
+    ],
+    
+    commonPitfalls: [
+      'Esquecer parênteses com & e | em Pandas',
+      'Usar = ao invés de == para comparação',
+      'Usar "and"/"or" em Pandas (use &, |)',
+      'Divisão por zero causa erro',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'Qual o resultado de 7 // 2?',
+        options: [
+          '3.5',
+          '3',
+          '4',
+          '1',
+        ],
+        correctIndex: 1,
+        explanation: '// é divisão inteira (floor). 7/2 = 3.5, truncado = 3.',
+      },
+      {
+        question: 'Por que (df["a"] > 5) & (df["b"] < 10) precisa de parênteses?',
+        options: [
+          'Apenas por estética',
+          'Porque & tem precedência maior que > e <',
+          'Para evitar erros de tipo',
+          'Parênteses são opcionais',
+        ],
+        correctIndex: 1,
+        explanation: 'O operador & tem precedência maior que comparações. Sem parênteses, seria avaliado incorretamente.',
+      },
+    ],
+  },
+
+  // ============================================
+  // SUB-LIÇÕES: PANDAS - DETALHADO
+  // ============================================
+
+  {
+    id: 'theory-pd-manip-2',
+    lessonId: 'pd-manip-2',
+    title: 'Filtros Booleanos Avançados',
+    
+    realWorldContext: 'Na vida real, você raramente filtra por uma condição só. "Clientes premium COM atraso de pagamento", "Vendas acima de 10k EM dezembro". Filtros compostos são o padrão.',
+    
+    militaryContext: 'É como triagem de inteligência com múltiplos critérios: "Relatórios classificados como URGENTE E origem HUMINT E últimas 24h". Cada & adiciona um critério de refinamento.',
+    
+    why: {
+      question: 'Por que combinar condições de filtro?',
+      explanation: 'Dados reais são multidimensionais. Uma condição raramente é suficiente para responder perguntas de negócio complexas.',
+      analogy: 'É como buscar no Google com múltiplas palavras. Quanto mais específico, mais preciso o resultado.',
+    },
+    
+    whatFor: {
+      question: 'Para que servem filtros compostos em análise?',
+      explanation: 'Filtros compostos respondem perguntas específicas: segmentação de clientes, análise de cohort, detecção de anomalias.',
+      useCases: [
+        'Clientes ativos com mais de 5 compras',
+        'Produtos com margem > 20% e estoque < 50',
+        'Funcionários de TI ou RH com > 2 anos',
+        'Vendas fora do padrão (outliers)',
+      ],
+    },
+    
+    how: {
+      question: 'Como criar filtros compostos em Pandas?',
+      explanation: 'Combine condições com & (E), | (OU), ~ (NÃO). Cada condição DEVE estar entre parênteses.',
+      steps: [
+        'Crie cada condição separadamente',
+        'Use & para E: (cond1) & (cond2)',
+        'Use | para OU: (cond1) | (cond2)',
+        'Use ~ para NÃO: ~(condição)',
+        'Aplique: df[filtro_combinado]',
+      ],
+      codeExample: 'import pandas as pd\n\ndf = pd.DataFrame({\n    "patente": ["Sgt", "Cb", "Sd", "Cap", "Sgt"],\n    "anos_servico": [8, 3, 1, 15, 5],\n    "qualificacao": ["A", "B", "C", "A", "A"],\n    "disponivel": [True, True, False, True, False]\n})\n\n# Filtro composto: Sargentos qualificação A disponíveis\nfiltro = (\n    (df["patente"] == "Sgt") & \n    (df["qualificacao"] == "A") & \n    (df["disponivel"] == True)\n)\n\naptos_missao = df[filtro]\nprint(aptos_missao)\n\n# Alternativa: Capitães OU mais de 10 anos\nveteranos = df[(df["patente"] == "Cap") | (df["anos_servico"] > 10)]',
+    },
+    
+    keyTakeaways: [
+      '& = E (todas devem ser verdadeiras)',
+      '| = OU (pelo menos uma verdadeira)',
+      '~ = NÃO (inverte a condição)',
+      'SEMPRE parênteses em cada condição individual',
+    ],
+    
+    commonPitfalls: [
+      'Esquecer parênteses (erro mais comum!)',
+      'Usar "and" Python ao invés de "&" Pandas',
+      'Confundir & com | na lógica',
+      'Filtro muito restritivo retorna vazio',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'O que (df["a"] > 5) | (df["b"] < 3) retorna?',
+        options: [
+          'Linhas onde a>5 E b<3',
+          'Linhas onde a>5 OU b<3',
+          'Todas as linhas',
+          'Erro de sintaxe',
+        ],
+        correctIndex: 1,
+        explanation: '| é OU lógico. Retorna linhas que satisfazem pelo menos uma das condições.',
+      },
+      {
+        question: 'Como inverter um filtro (selecionar o oposto)?',
+        options: [
+          'Usar != em todas as condições',
+          'Usar ~ antes do filtro: ~(filtro)',
+          'Subtrair do DataFrame',
+          'Não é possível',
+        ],
+        correctIndex: 1,
+        explanation: '~ inverte a condição booleana. df[~filtro] retorna as linhas que NÃO satisfazem o filtro.',
+      },
+    ],
+  },
+
+  {
+    id: 'theory-pd-analysis-2',
+    lessonId: 'pd-analysis-2',
+    title: 'Agregações com GroupBy',
+    
+    realWorldContext: 'GroupBy é a ferramenta mais poderosa do Pandas. É como fazer tabelas dinâmicas no Excel, mas programaticamente. Toda análise séria usa groupby.',
+    
+    militaryContext: 'GroupBy é como consolidar relatórios de unidades subordinadas. Cada unidade reporta individualmente, mas o comando precisa ver: total por região, média por tipo, contagem por status. Agregação é visão de comando.',
+    
+    why: {
+      question: 'Por que agregar ao invés de analisar individualmente?',
+      explanation: 'Humanos não processam milhares de linhas. Agregações transformam dados brutos em insights: totais, médias, contagens. Padrões só emergem de agregações.',
+      analogy: 'É como um resumo executivo. O CEO não lê cada transação - lê total por categoria.',
+    },
+    
+    whatFor: {
+      question: 'Para que serve groupby na prática?',
+      explanation: 'Responde perguntas como: "Qual região vende mais?", "Qual a média de tempo por categoria?", "Quantos clientes por segmento?"',
+      useCases: [
+        'Vendas totais por vendedor/região/mês',
+        'Média de avaliação por produto',
+        'Contagem de ocorrências por tipo',
+        'Estatísticas múltiplas com .agg()',
+      ],
+    },
+    
+    how: {
+      question: 'Como usar groupby efetivamente?',
+      explanation: 'df.groupby("coluna_grupo")["coluna_valor"].agregacao(). O grupo vira índice do resultado.',
+      steps: [
+        'Identifique a coluna de agrupamento',
+        'Identifique a coluna de valor a agregar',
+        'Use .groupby("grupo")["valor"]',
+        'Aplique agregação: .sum(), .mean(), .count()',
+        'Use .agg() para múltiplas funções',
+      ],
+      codeExample: 'import pandas as pd\n\ndf = pd.DataFrame({\n    "regiao_militar": ["1ª RM", "2ª RM", "1ª RM", "3ª RM", "2ª RM"],\n    "tipo_unidade": ["Infantaria", "Cavalaria", "Artilharia", "Infantaria", "Infantaria"],\n    "efetivo": [1500, 800, 600, 1200, 1100],\n    "prontidao": [0.92, 0.87, 0.95, 0.88, 0.91]\n})\n\n# Total de efetivo por região\npor_regiao = df.groupby("regiao_militar")["efetivo"].sum()\nprint("Efetivo por RM:\\n", por_regiao)\n\n# Múltiplas estatísticas\nstats = df.groupby("regiao_militar")["efetivo"].agg([\n    "sum",      # Total\n    "mean",     # Média\n    "count"     # Quantidade\n])\nprint("\\nEstatísticas:\\n", stats)\n\n# Agrupar por múltiplas colunas\npor_tipo_regiao = df.groupby(["regiao_militar", "tipo_unidade"])["efetivo"].sum()\nprint("\\nPor região e tipo:\\n", por_tipo_regiao)',
+    },
+    
+    keyTakeaways: [
+      'groupby segue Split-Apply-Combine',
+      'A coluna de grupo vira índice - use .reset_index()',
+      '.agg() aceita lista de funções ou dicionário',
+      'Pode agrupar por múltiplas colunas com lista',
+    ],
+    
+    commonPitfalls: [
+      'Esquecer de selecionar coluna de valor',
+      'Tentar mean() em coluna de texto',
+      'Não perceber que resultado tem novo índice',
+      'Confundir transform() com apply()',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'O que df.groupby("a")["b"].sum() retorna?',
+        options: [
+          'Soma de todas as colunas por grupo a',
+          'Soma da coluna b para cada valor único de a',
+          'Uma lista de somas',
+          'O DataFrame inteiro somado',
+        ],
+        correctIndex: 1,
+        explanation: 'Agrupa por valores únicos de "a", depois soma "b" para cada grupo. Retorna uma Series indexada por "a".',
+      },
+      {
+        question: 'Como obter média E soma no mesmo groupby?',
+        options: [
+          'Chamar .mean() e .sum() separadamente',
+          'Usar .agg(["mean", "sum"])',
+          'Não é possível',
+          'Usar dois groupby',
+        ],
+        correctIndex: 1,
+        explanation: '.agg() aceita lista de funções, retornando DataFrame com uma coluna por função.',
+      },
+    ],
+  },
+
+  {
+    id: 'theory-pd-adv-2',
+    lessonId: 'pd-adv-2',
+    title: 'Tratamento de Dados Faltantes',
+    
+    realWorldContext: 'Dados do mundo real SEMPRE têm valores faltantes. Clientes que não preencheram formulário, sensores que falharam, campos opcionais. Saber tratar NaN é habilidade essencial.',
+    
+    militaryContext: 'É como operar com inteligência incompleta - situação comum em combate. Você não espera 100% de informação para decidir. Trata o que falta: estima, ignora ou usa valor padrão.',
+    
+    why: {
+      question: 'Por que dados faltantes são problemáticos?',
+      explanation: 'NaN propaga: qualquer operação com NaN geralmente resulta em NaN. Médias ficam erradas, contagens imprecisas, análises comprometidas.',
+      analogy: 'É como uma corrente com elo quebrado. O elo faltante compromete toda a estrutura.',
+    },
+    
+    whatFor: {
+      question: 'Para que servem as técnicas de tratamento de NaN?',
+      explanation: 'Diferentes situações exigem diferentes estratégias: preencher com média, com valor anterior, remover linha, ou manter NaN sabendo que existe.',
+      useCases: [
+        'Preencher idade faltante com mediana',
+        'Usar último valor válido para séries temporais',
+        'Remover linhas com dados críticos faltando',
+        'Substituir por 0 quando faz sentido',
+      ],
+    },
+    
+    how: {
+      question: 'Como identificar e tratar NaN em Pandas?',
+      explanation: 'isna() identifica, dropna() remove, fillna() preenche. Cada um tem parâmetros para controle fino.',
+      steps: [
+        'df.isna().sum() - conta NaN por coluna',
+        'df.dropna() - remove linhas com qualquer NaN',
+        'df.dropna(subset=["col"]) - remove só se col for NaN',
+        'df["col"].fillna(valor) - substitui NaN por valor',
+        'df["col"].fillna(df["col"].mean()) - preenche com média',
+      ],
+      codeExample: 'import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({\n    "unidade": ["1º BIL", "2º BIL", "3º BIL", "4º BIL"],\n    "efetivo": [1500, np.nan, 1200, 1400],\n    "suprimentos": [0.85, 0.90, np.nan, 0.88],\n    "moral": [np.nan, 8.5, 9.0, 8.8]\n})\n\nprint("NaN por coluna:")\nprint(df.isna().sum())\n\n# Preencher efetivo com média\ndf["efetivo"] = df["efetivo"].fillna(df["efetivo"].mean())\n\n# Preencher suprimentos com último valor válido\ndf["suprimentos"] = df["suprimentos"].fillna(method="ffill")\n\n# Remover linhas onde moral é NaN\ndf_limpo = df.dropna(subset=["moral"])\n\nprint("\\nApós tratamento:")\nprint(df)',
+    },
+    
+    keyTakeaways: [
+      'Sempre verificar NaN antes de análise',
+      'fillna() preserva linhas, dropna() remove',
+      'Média para numéricos, moda para categóricos',
+      'ffill/bfill para séries temporais',
+    ],
+    
+    commonPitfalls: [
+      'Preencher com valor sem pensar no contexto',
+      'Esquecer que dropna() remove por padrão QUALQUER NaN',
+      'Não verificar se preenchimento faz sentido',
+      'Usar 0 quando zero tem significado diferente',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'Qual a diferença entre fillna() e dropna()?',
+        options: [
+          'Não há diferença',
+          'fillna substitui NaN, dropna remove a linha',
+          'dropna é mais rápido',
+          'fillna só funciona com números',
+        ],
+        correctIndex: 1,
+        explanation: 'fillna() mantém a linha substituindo NaN. dropna() remove linhas inteiras que contêm NaN.',
+      },
+      {
+        question: 'Quando usar ffill (forward fill)?',
+        options: [
+          'Sempre que houver NaN',
+          'Quando faz sentido usar o valor anterior (série temporal)',
+          'Para valores numéricos apenas',
+          'Nunca, é deprecated',
+        ],
+        correctIndex: 1,
+        explanation: 'ffill propaga o último valor válido. Faz sentido em séries temporais onde o valor "continua" até mudar.',
+      },
+    ],
+  },
+
+  {
+    id: 'theory-pd-adv-3',
+    lessonId: 'pd-adv-3',
+    title: 'Merge e Join de DataFrames',
+    
+    realWorldContext: 'Dados corporativos vivem em sistemas separados: clientes em um, vendas em outro, produtos em terceiro. Merge une essas tabelas para análise integrada.',
+    
+    militaryContext: 'Merge é fusão de inteligência de múltiplas fontes. HUMINT, SIGINT, IMINT - cada uma em seu sistema. A chave comum (código de alvo, coordenadas, data) permite integrar para visão completa.',
+    
+    why: {
+      question: 'Por que dados são armazenados separados se precisamos juntos?',
+      explanation: 'Normalização evita duplicação e inconsistência. É mais eficiente guardar "cliente 123" uma vez do que repetir nome/endereço em cada venda. Merge reconstrói a visão integrada.',
+      analogy: 'É como peças de Lego. Cada peça é independente, mas você pode combiná-las para criar estruturas complexas.',
+    },
+    
+    whatFor: {
+      question: 'Para que servem os diferentes tipos de join?',
+      explanation: 'Inner: só correspondências. Left: tudo da esquerda. Right: tudo da direita. Outer: tudo de ambos. A escolha depende do que você quer preservar.',
+      useCases: [
+        'Inner: só vendas de produtos ativos',
+        'Left: todos os clientes, mesmo sem compras',
+        'Right: todos os produtos, mesmo sem vendas',
+        'Outer: visão completa de ambas as tabelas',
+      ],
+    },
+    
+    how: {
+      question: 'Como usar merge em Pandas?',
+      explanation: 'pd.merge(df1, df2, on="chave", how="tipo"). Se colunas têm nomes diferentes, use left_on e right_on.',
+      steps: [
+        'Identifique a coluna comum (chave)',
+        'Decida o tipo de join (inner, left, right, outer)',
+        'Use on= se a chave tem mesmo nome em ambos',
+        'Use left_on e right_on se nomes diferentes',
+        'Verifique resultado para NaN e duplicatas',
+      ],
+      codeExample: 'import pandas as pd\n\n# Tabela de unidades\nunidades = pd.DataFrame({\n    "id_unidade": ["U001", "U002", "U003"],\n    "nome": ["1º BIL", "2º RC", "3º GAC"],\n    "regiao": ["Norte", "Sul", "Leste"]\n})\n\n# Tabela de suprimentos\nsuprimentos = pd.DataFrame({\n    "cod_unidade": ["U001", "U002", "U004"],\n    "municao": [5000, 3000, 2000],\n    "racoes": [1500, 1000, 800]\n})\n\n# Left join: todas as unidades, mesmo sem suprimento registrado\nresultado = pd.merge(\n    unidades,\n    suprimentos,\n    left_on="id_unidade",\n    right_on="cod_unidade",\n    how="left"\n)\n\nprint(resultado)\n# U003 aparece com NaN em munição/rações\n# U004 não aparece (não está em unidades)',
+    },
+    
+    keyTakeaways: [
+      'Inner = interseção, Outer = união',
+      'Left mantém todas as linhas da tabela esquerda',
+      'NaN indica que não houve match no outro lado',
+      'Chaves duplicadas causam produto cartesiano',
+    ],
+    
+    commonPitfalls: [
+      'Não verificar duplicatas na chave',
+      'Esquecer how= (default é inner)',
+      'Confundir merge com concat',
+      'Não tratar NaN após left/right join',
+    ],
+    
+    comprehensionQuiz: [
+      {
+        question: 'O que acontece em um left join se a chave não existe na tabela direita?',
+        options: [
+          'A linha é removida',
+          'A linha é mantida com NaN nas colunas da direita',
+          'Erro de execução',
+          'A chave é criada automaticamente',
+        ],
+        correctIndex: 1,
+        explanation: 'Left join preserva todas as linhas da esquerda. Onde não há match, as colunas da direita ficam com NaN.',
+      },
+      {
+        question: 'Por que merge pode resultar em mais linhas que as tabelas originais?',
+        options: [
+          'Bug do Pandas',
+          'Chaves duplicadas causam produto cartesiano',
+          'Join outer sempre aumenta',
+          'Não é possível ter mais linhas',
+        ],
+        correctIndex: 1,
+        explanation: 'Se uma chave aparece 2x na tabela A e 3x na B, o merge cria 2x3=6 combinações para essa chave.',
+      },
+    ],
+  },
 ];
