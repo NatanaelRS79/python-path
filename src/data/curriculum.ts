@@ -51,7 +51,7 @@ export const curriculum: Module[] = [
     description: 'Como o computador toma decisões? Condicionais e lógica.',
     icon: '🔀',
     category: 'python-basics',
-    unlocked: false,
+    unlocked: true, // Desbloqueado para teste
     completed: false,
     masteryPercentage: 0,
     requiredMastery: 80,
@@ -209,7 +209,7 @@ export const curriculum: Module[] = [
     description: 'Interpretação de documentação e manuais técnicos.',
     icon: '📚',
     category: 'technical-english',
-    unlocked: false,
+    unlocked: true, // Desbloqueado para teste
     completed: false,
     masteryPercentage: 0,
     requiredMastery: 80,
@@ -229,7 +229,7 @@ export const curriculum: Module[] = [
     description: 'Padrões linguísticos em contexto de TI.',
     icon: '🔤',
     category: 'technical-english',
-    unlocked: false,
+    unlocked: true, // Desbloqueado para teste
     completed: false,
     masteryPercentage: 0,
     requiredMastery: 80,
