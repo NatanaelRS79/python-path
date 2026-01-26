@@ -61,21 +61,24 @@ const Lesson = () => {
   // Get exercises for this lesson
   const lessonExercises = sampleExercises.filter(e => e.lessonId === id);
   
-  // Check if previous module is mastered (for blocking)
+  // Check if module is unlocked before allowing access
   useEffect(() => {
     if (!lesson || !module) {
       setPhase('loading');
       return;
     }
     
-    // Find previous module in curriculum
-    const moduleIndex = curriculum.findIndex(m => m.id === module.id);
-    if (moduleIndex > 0) {
-      const prevModule = curriculum[moduleIndex - 1];
-      const blocked = checkModuleAccess(module.id, prevModule.id, prevModule.requiredMastery);
-      if (blocked) {
-        setPhase('blocked');
-        return;
+    // Check if module is unlocked in curriculum
+    if (!module.unlocked) {
+      // Find previous module for mastery gate info
+      const moduleIndex = curriculum.findIndex(m => m.id === module.id);
+      if (moduleIndex > 0) {
+        const prevModule = curriculum[moduleIndex - 1];
+        const blocked = checkModuleAccess(module.id, prevModule.id, prevModule.requiredMastery);
+        if (blocked) {
+          setPhase('blocked');
+          return;
+        }
       }
     }
     
