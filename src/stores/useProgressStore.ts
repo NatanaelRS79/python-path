@@ -228,7 +228,8 @@ export const useProgressStore = create<ProgressState>()(
 
       scheduleReview: (lessonId, conceptId, topic) =>
         set((state) => {
-          const existingReview = state.progress.reviewSchedule.find(
+          const reviewSchedule = state.progress.reviewSchedule || [];
+          const existingReview = reviewSchedule.find(
             r => r.lessonId === lessonId && r.conceptId === conceptId
           );
 
@@ -252,20 +253,21 @@ export const useProgressStore = create<ProgressState>()(
           return {
             progress: {
               ...state.progress,
-              reviewSchedule: [...state.progress.reviewSchedule, newReview],
+              reviewSchedule: [...reviewSchedule, newReview],
             },
           };
         }),
 
       completeReview: (lessonId, conceptId, performance) =>
         set((state) => {
-          const reviewIndex = state.progress.reviewSchedule.findIndex(
+          const reviewSchedule = state.progress.reviewSchedule || [];
+          const reviewIndex = reviewSchedule.findIndex(
             r => r.lessonId === lessonId && r.conceptId === conceptId
           );
 
           if (reviewIndex === -1) return state;
 
-          const review = state.progress.reviewSchedule[reviewIndex];
+          const review = reviewSchedule[reviewIndex];
           const { nextDate, nextInterval } = getNextReviewDate(review.interval, performance);
 
           const updatedReview: ReviewItem = {
@@ -276,11 +278,11 @@ export const useProgressStore = create<ProgressState>()(
             lastReviewed: new Date(),
           };
 
-          const newSchedule = [...state.progress.reviewSchedule];
+          const newSchedule = [...reviewSchedule];
           newSchedule[reviewIndex] = updatedReview;
 
           // Update lesson stats review count
-          const lessonStats = state.progress.lessonStats[lessonId];
+          const lessonStats = state.progress.lessonStats?.[lessonId];
           const updatedLessonStats = lessonStats 
             ? { ...lessonStats, reviewCount: lessonStats.reviewCount + 1 }
             : {
@@ -360,7 +362,8 @@ export const useProgressStore = create<ProgressState>()(
       getOverdueReviews: () => {
         const state = get();
         const now = new Date();
-        return state.progress.reviewSchedule.filter(r => new Date(r.scheduledFor) < now);
+        const reviewSchedule = state.progress.reviewSchedule || [];
+        return reviewSchedule.filter(r => new Date(r.scheduledFor) < now);
       },
 
       getTodayReviews: () => {
@@ -369,7 +372,8 @@ export const useProgressStore = create<ProgressState>()(
         const endOfDay = new Date(now);
         endOfDay.setHours(23, 59, 59, 999);
         
-        return state.progress.reviewSchedule.filter(r => {
+        const reviewSchedule = state.progress.reviewSchedule || [];
+        return reviewSchedule.filter(r => {
           const scheduled = new Date(r.scheduledFor);
           return scheduled >= now && scheduled <= endOfDay;
         });
