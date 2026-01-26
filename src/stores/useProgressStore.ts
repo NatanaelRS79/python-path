@@ -188,7 +188,9 @@ export const useProgressStore = create<ProgressState>()(
       // Enhanced learning methods
       updateLessonStats: (lessonId, correct) =>
         set((state) => {
-          const existingStats = state.progress.lessonStats[lessonId] || {
+          // Resiliência para dados legados: `lessonStats` pode não existir no localStorage
+          const lessonStatsMap = state.progress.lessonStats || {};
+          const existingStats = lessonStatsMap[lessonId] || {
             lessonId,
             exercisesCompleted: 0,
             correctAnswers: 0,
@@ -215,7 +217,7 @@ export const useProgressStore = create<ProgressState>()(
             progress: {
               ...state.progress,
               lessonStats: {
-                ...state.progress.lessonStats,
+                ...lessonStatsMap,
                 [lessonId]: newStats,
               },
               masteryLevels: {
@@ -282,7 +284,8 @@ export const useProgressStore = create<ProgressState>()(
           newSchedule[reviewIndex] = updatedReview;
 
           // Update lesson stats review count
-          const lessonStats = state.progress.lessonStats?.[lessonId];
+          const lessonStatsMap = state.progress.lessonStats || {};
+          const lessonStats = lessonStatsMap?.[lessonId];
           const updatedLessonStats = lessonStats 
             ? { ...lessonStats, reviewCount: lessonStats.reviewCount + 1 }
             : {
@@ -300,7 +303,7 @@ export const useProgressStore = create<ProgressState>()(
               ...state.progress,
               reviewSchedule: newSchedule,
               lessonStats: {
-                ...state.progress.lessonStats,
+                ...lessonStatsMap,
                 [lessonId]: updatedLessonStats,
               },
             },
@@ -309,7 +312,8 @@ export const useProgressStore = create<ProgressState>()(
 
       checkModuleAccess: (moduleId, requiredModuleId, requiredMastery) => {
         const state = get();
-        const lessonStats = state.progress.lessonStats;
+        // Resiliência para dados legados: `lessonStats` pode não existir
+        const lessonStats = state.progress.lessonStats || {};
         
         // Calculate average mastery for required module lessons
         const requiredLessonStats = Object.values(lessonStats).filter(
@@ -356,7 +360,8 @@ export const useProgressStore = create<ProgressState>()(
 
       getLessonStats: (lessonId) => {
         const state = get();
-        return state.progress.lessonStats[lessonId];
+        const lessonStatsMap = state.progress.lessonStats || {};
+        return lessonStatsMap[lessonId];
       },
 
       getOverdueReviews: () => {
