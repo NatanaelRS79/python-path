@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { 
   UserProgress, 
   WeakPoint, 
@@ -12,6 +12,9 @@ import {
   MASTERY_CONFIG
 } from '@/types/learning';
 import { getLevelFromXP, getNextReviewDate } from '@/data/curriculum';
+
+// Versão atual do estado - incrementar quando a estrutura mudar
+const STATE_VERSION = 2;
 
 interface ProgressState {
   progress: UserProgress;
@@ -36,6 +39,7 @@ interface ProgressState {
   getLessonStats: (lessonId: string) => LessonStats | undefined;
   getOverdueReviews: () => ReviewItem[];
   getTodayReviews: () => ReviewItem[];
+  resetProgress: () => void;
 }
 
 const initialProgress: UserProgress = {
@@ -383,9 +387,79 @@ export const useProgressStore = create<ProgressState>()(
           return scheduled >= now && scheduled <= endOfDay;
         });
       },
+
+      // Reset completo do progresso (para demo/testes)
+      resetProgress: () =>
+        set(() => ({
+          progress: { ...initialProgress, lastActive: new Date() },
+        })),
     }),
     {
       name: 'python-pandas-progress',
+      version: STATE_VERSION,
+      storage: createJSONStorage(() => localStorage),
+      
+      // Migração de estado para compatibilidade com dados legados
+      migrate: (persistedState: unknown, version: number) => {
+        console.log('[Zustand] Migrando estado da versão', version, 'para', STATE_VERSION);
+        
+        // Se não há versão ou é muito antiga, resetar para o estado inicial
+        if (version === 0 || !persistedState) {
+          console.log('[Zustand] Versão muito antiga ou inválida, resetando estado');
+          return { progress: { ...initialProgress, lastActive: new Date() } };
+        }
+        
+        const state = persistedState as { progress?: Partial<UserProgress> };
+        
+        // Migração v1 -> v2: garantir que todos os campos obrigatórios existam
+        if (version < 2) {
+          console.log('[Zustand] Aplicando migração v1 -> v2');
+          const migratedProgress: UserProgress = {
+            userId: state.progress?.userId || 'guest',
+            totalXp: state.progress?.totalXp || 0,
+            level: state.progress?.level || 1,
+            streak: state.progress?.streak || 0,
+            longestStreak: state.progress?.longestStreak || 0,
+            completedLessons: state.progress?.completedLessons || [],
+            masteryLevels: state.progress?.masteryLevels || {},
+            weakPoints: state.progress?.weakPoints || [],
+            strengthPoints: state.progress?.strengthPoints || [],
+            lastActive: state.progress?.lastActive ? new Date(state.progress.lastActive) : new Date(),
+            dailyGoal: state.progress?.dailyGoal || 50,
+            dailyProgress: state.progress?.dailyProgress || 0,
+            badges: state.progress?.badges || [],
+            examHistory: state.progress?.examHistory || [],
+            // Campos que podem estar faltando em versões antigas
+            reviewSchedule: state.progress?.reviewSchedule || [],
+            lessonStats: state.progress?.lessonStats || {},
+            blockedModules: state.progress?.blockedModules || [],
+          };
+          
+          return { progress: migratedProgress };
+        }
+        
+        return state;
+      },
+      
+      // Merge para garantir que novos campos sejam adicionados ao estado existente
+      merge: (persistedState, currentState) => {
+        const persisted = persistedState as { progress?: Partial<UserProgress> };
+        return {
+          ...currentState,
+          progress: {
+            ...initialProgress,
+            ...persisted?.progress,
+            // Garantir que arrays e objetos existam mesmo após merge
+            reviewSchedule: persisted?.progress?.reviewSchedule || [],
+            lessonStats: persisted?.progress?.lessonStats || {},
+            blockedModules: persisted?.progress?.blockedModules || [],
+            weakPoints: persisted?.progress?.weakPoints || [],
+            badges: persisted?.progress?.badges || [],
+            examHistory: persisted?.progress?.examHistory || [],
+            completedLessons: persisted?.progress?.completedLessons || [],
+          },
+        };
+      },
     }
   )
 );

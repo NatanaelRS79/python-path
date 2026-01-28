@@ -6,6 +6,17 @@ import EbbinghausReview from '@/components/learning/EbbinghausReview';
 import { curriculum } from '@/data/curriculum';
 import { useProgressStore } from '@/stores/useProgressStore';
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { 
   ChevronRight, 
   BookOpen, 
@@ -13,13 +24,15 @@ import {
   AlertTriangle,
   Flame,
   Brain,
-  Globe
+  Globe,
+  RotateCcw
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
-  const { progress, getOverdueReviews, getTodayReviews } = useProgressStore();
+  const { progress, getOverdueReviews, getTodayReviews, resetProgress } = useProgressStore();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showReviews, setShowReviews] = useState(false);
   const navigate = useNavigate();
@@ -54,9 +67,42 @@ const Dashboard = () => {
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
             Olá, Estudante! 👋
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Continue sua jornada para dominar Python e Pandas.
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-muted-foreground text-lg">
+              Continue sua jornada para dominar Python e Pandas.
+            </p>
+            
+            {/* Reset Progress Button */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive gap-2">
+                  <RotateCcw className="w-4 h-4" />
+                  <span className="hidden sm:inline">Resetar (Demo)</span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Resetar todo o progresso?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Esta ação irá apagar todo seu progresso, incluindo XP, lições completadas, 
+                    revisões agendadas e estatísticas. Esta ação não pode ser desfeita.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      resetProgress();
+                      toast.success('Progresso resetado com sucesso!');
+                    }}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    Resetar Progresso
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </div>
         
         {/* Quick Actions */}
